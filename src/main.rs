@@ -4,7 +4,7 @@ use std::io::Write;
 use na::{Point4, Vector4, Vector3};
 use image::{DynamicImage, GenericImage, Rgba};
 
-const DIMS: [u32; 2] = [800, 600];
+const DIMS: [u32; 2] = [800, 800];
 
 pub type Colour = Vector3<f64>;
 
@@ -126,7 +126,7 @@ fn spawn_rays(origin: Point4<f64>, viewdir: Vector4<f64>, upvec: Vector4<f64>, l
     let mut y = -0.5;
 
     let dx = 1.0/xmax as f64;
-    let dy = 1.0/ymax as f64;
+    let dy = dx;
 
     let mut rays = Vec::with_capacity(xmax as usize * ymax as usize);
 
@@ -147,7 +147,7 @@ fn spawn_rays(origin: Point4<f64>, viewdir: Vector4<f64>, upvec: Vector4<f64>, l
             let r = Ray::new(o, d, i, j);
 
             rays.push(r);
-            println!("{} {}", i, j);
+            // println!("{} {}", i, j);
 
             x += dx;
             i += 1;
@@ -174,7 +174,7 @@ fn main() {
     );
 
     let objects = vec![
-        Sphere::new(Point4::new(0.0, 0.0, 5.0, 0.0), 1.0, Colour::new(0.0, 1.0, 0.0)),
+        Sphere::new(Point4::new(0.0, 0.0, 1.0, 0.0), 1.0, Colour::new(0.0, 1.0, 0.0)),
     ];
 
     for (i, ray) in rays.iter().enumerate() {
