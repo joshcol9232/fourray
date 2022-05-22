@@ -44,7 +44,6 @@ impl Ray {
             let intersect = obj.ray_intersection(self); // Returns depth at intersection
             // println!("Intersect: {}", intersect);
             if intersect > -1.0 {  // Has hit
-                println!("Doing raypos stuff.");
                 let raypos = self.at(intersect);
 
                 // APPLY BASIC SHADING
@@ -99,13 +98,12 @@ impl Object for Sphere {
         // https://raytracing.github.io/books/RayTracingInOneWeekend.html#overview
         let diff = ray.orig - self.pos;
         let b = 2.0 * ray.dir.dot(&diff);
-        let c = diff.norm_squared() - self.rad.powi(2);
+        let c = diff.norm_squared() - self.rad*self.rad;
         // a = 1 because a is the dot product of the ray direction with itself, so 1 squared.
 
         let discriminant = b.powi(2) - 4.0 * c;
         if discriminant >= 0.0 {
             // Now find location of hit
-            println!("Hit!: {}", discriminant);
             (-b - discriminant.sqrt() ) / 2.0
         } else {
             -1.0
@@ -181,7 +179,7 @@ fn spawn_rays(origin: Vector4<f64>, viewdir: Vector4<f64>, upvec: Vector4<f64>, 
     NOTE: For now, just debugging with known directions
     */
     
-    let viewport_dist = 1.0/(2.0 * (fov/2.0).tan()); // This is a point on our plane at (x=0, y=0)
+    let viewport_dist = 1.0/(2.0 * (fov/4.0).tan()); // This is a point on our plane at (x=0, y=0)
     let mut x = -0.5;  // In plane of viewport
     let mut y = -0.5;
 
@@ -233,8 +231,8 @@ fn main() {
     );
 
     let objects: Vec<Box<dyn Object>> = vec![
-        Box::new(Sphere::new(Vector4::new(0.0, 0.0, 4.0, 0.0), 3.0, Colour::new(0.0, 1.0, 0.0))),
-        Box::new(Sphere::new(Vector4::new(1.0, 0.0, 4.0, 0.0), 3.0, Colour::new(1.0, 0.0, 0.0))),
+        Box::new(Sphere::new(Vector4::new(1.2, 0.3, 3.0, 0.0), 0.5, Colour::new(0.0, 1.0, 0.0))),
+        Box::new(Sphere::new(Vector4::new(-1.2, 0.3, 3.0, 0.0), 0.5, Colour::new(1.0, 0.0, 0.0))),
         // Box::new(Floor { y: 1.5, colour: Colour::new(1.0, 0.0, 1.0) }),
     ];
 
