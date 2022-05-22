@@ -174,7 +174,7 @@ fn main() {
     );
 
     let objects = vec![
-        Sphere::new(Point4::new(0.0, 0.0, 1.0, 0.0), 1.0, Colour::new(0.0, 1.0, 0.0)),
+        Sphere::new(Point4::new(0.0, 0.0, 2.0, 0.0), 1.0, Colour::new(0.0, 1.0, 0.0)),
     ];
 
     for (i, ray) in rays.iter().enumerate() {
